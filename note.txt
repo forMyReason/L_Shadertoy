@@ -1,0 +1,27 @@
+##使用SDF画一个圆
+- 调整圆形比例，不随着窗口改变纵横比
+- 使用iTime让圆随着时间改变颜色
+- 让圆移动
+- 空心圆【？】
+
+##画正方形
+- 怎么让正方向不管怎么拖动，正方形都在所有屏幕中间？
+- 让正方向旋转
+
+##多个2D形状的混合
+- mix / lerp
+- 2DSDF就是公式
+- 两次mix混合多种形状
+
+##
+
+
+https://www.desmos.com/calculator?lang=zh-CN
+https://www.desmos.com/matrix?lang=zh-CN
+https://www.wolframalpha.com/
+https://www.wolframalpha.com/input/?i=%5B%5Bcos%28t%29%2C-sin%28t%29%5D%2C%5Bsin%28t%29%2Ccos%28t%29%5D%5D+*%5Bx%2Cy%5D
+https://registry.khronos.org/OpenGL-Refpages/gl4/html/mix.xhtml
+
+
+https://shadertoy.peakcoder.com/circles-anmiation/how-to-draw-circle
+https://zhuanlan.zhihu.com/p/52287086
