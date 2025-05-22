@@ -13,7 +13,8 @@
 - 2DSDF就是公式
 - 两次mix混合多种形状
 
-##
+##4.2
+最好的sdf就是返回距离，每个draw不反悔vec3
 
 
 https://www.desmos.com/calculator?lang=zh-CN
