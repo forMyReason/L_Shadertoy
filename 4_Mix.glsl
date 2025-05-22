@@ -31,14 +31,20 @@ vec2 rotate(vec2 uv, float th)
     return uv * mat2(cos(th),sin(th),-sin(th),cos(th));
 }
 
+vec3 draw_background(vec2 uv)
+{
+    // 因为传入的uv是(-0.5,0.5)，所以加(0.5,0.5)
+    return vec3(mix(vec2(0.),vec2(1.),uv + vec2(0.5,0.5)),1.0);
+}
+
 vec3 draw_scene(vec2 uv)
 {
-    vec3 col = vec3(1);
+    vec3 col = draw_background(uv);
     float circle = sdf_circle(uv, 0.1, vec2(0.0, 0.0));
     float square = sdf_square(uv, 0.1, vec2(-0.1, 0.1));
 
     col = mix(vec3(1.,0.,0.), col, step(0.0,square));
-    col = mix(vec3(0.,0.,1.), col, step(0.0,circle));
+    col = mix(vec3(0.,1.,0.6), col, step(0.0,circle));
     return col;
 }
 
