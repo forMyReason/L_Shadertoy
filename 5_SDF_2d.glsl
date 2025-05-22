@@ -117,6 +117,10 @@ vec3 drawScene(vec2 uv) {
     
     res = step(0., res); // Same as res > 0. ? 1. : 0.;
 
+    // Antialias Entire Result
+    res = min(d1, d2);
+    res = smoothstep(0., 0.08, res);
+
     col = mix(vec3(1,0,0), col, res);
     return col;
 }

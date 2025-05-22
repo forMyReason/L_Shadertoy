@@ -12,9 +12,11 @@
 - mix / lerp
 - 2DSDF就是公式
 - 两次mix混合多种形状
+- 最好的sdf就是返回距离，每个draw不反悔vec3
+- 新增渐变背景
 
-##4.2
-最好的sdf就是返回距离，每个draw不反悔vec3
+##2D SDF
+
 
 
 https://www.desmos.com/calculator?lang=zh-CN
