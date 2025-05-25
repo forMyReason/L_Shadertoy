@@ -42,12 +42,21 @@
     - ray marching
     - ray tracing
     - path tracing
+
 - RayMarching原理
     - https://www.youtube.com/watch?v=nMAgogUyv3E
     - https://www.desmos.com/calculator/ragaytzefw
 
 
-## 7.1 绘制多个3D对象
+## 7 绘制多个3D对象和多个颜色
 - 添加多个物体
     - 使用 min 对 sdSphere 返回的最近距离操作
 - 添加地板
+    - mod 函数通常用于创建棋盘格或讲场景的部分增加 Tiling。
+
+- 添加单独颜色
+    1. 修改 SDF，返回 vec4，分别对应 SignDistance 和 Color
+    2. 使用 Struct : [7_MultiObject.glsl](7_MultiObject.glsl)
+    ![images](images/shadertoy.png)
+    3. 使用 ID 为场景中不同物体进行着色
+        - 人们经常使用 map 函数而不是 sdScene 函数。您可能还会看到一个 render 函数，该函数通过查看从光线行进算法返回的最近对象的 ID 来处理为每个对象分配颜色。
