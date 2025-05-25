@@ -56,7 +56,6 @@
 
 - 添加单独颜色
     1. 修改 SDF，返回 vec4，分别对应 SignDistance 和 Color
-    2. 使用 Struct : [7_MultiObject.glsl](7_MultiObject.glsl)
-    ![images](images/shadertoy.png)
-    3. 使用 ID 为场景中不同物体进行着色
-        - 人们经常使用 map 函数而不是 sdScene 函数。您可能还会看到一个 render 函数，该函数通过查看从光线行进算法返回的最近对象的 ID 来处理为每个对象分配颜色。
+    2. 使用 Struct : [7_MultiObject](7_MultiObject.glsl)
+    ![images](images/7_MultiObject.png)
+    3. 使用 ID 为场景中不同物体进行着色 : [7_MapIDColor](7_MapIDColor.glsl)
