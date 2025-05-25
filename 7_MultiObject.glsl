@@ -10,13 +10,22 @@ float sdSphere(vec3 p, float r, vec3 offset)
     return length(p - offset) - r;
 }
 
+// TODO: 7.2 添加地板
+float sdFloor(vec3 p)
+{
+    return p.y + 1.0;
+}
+
 // 返回场景最近的形状
 float sdScene(vec3 p)
 {
     // TODO: 7.1 添加多个物体
     float sphere_left = sdSphere(p, 1.0, vec3(-1.5, 0, -2));
     float sphere_right = sdSphere(p, 1.0, vec3( 1.5 ,0, -2));
-    return min(sphere_left, sphere_right);
+    float res = min(sphere_left, sphere_right);
+
+    res = min(sdFloor(p),res);
+    return res;
 }
 
 float rayMarch(vec3 ro, vec3 rd, float start, float end)
