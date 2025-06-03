@@ -3,19 +3,20 @@
 
 > 少记文字笔记，切勿陷入茴香豆几种写法的误区...
 
-## 0. 工具汇总
+# 一、前置内容
+## 0.0 教程与参考资料
+- [Shadertoy 中文教程](https://shadertoy.peakcoder.com/)
+- [RayMarching 动态演示 - Desmos](https://www.desmos.com/calculator/ragaytzefw)
+- [Raymarching explained in one minute](https://www.youtube.com/watch?v=nMAgogUyv3E)
+- [Unity 复现 shadertoy](https://zhuanlan.zhihu.com/p/52287086)
+
+## 0.1 数学工具汇总
 - 公式绘图：https://www.desmos.com/calculator?lang=zh-CN
 - 矩阵运算：https://www.desmos.com/matrix?lang=zh-CN
-- 系列科学工具：[WolframAlpha](https://www.wolframalpha.com/)
-    - https://www.wolframalpha.com/input/?i=%5B%5Bcos%28t%29%2C-sin%28t%29%5D%2C%5Bsin%28t%29%2Ccos%28t%29%5D%5D+*%5Bx%2Cy%5D  
-        <img src="images/wolframalpha.png" alt="wolframalpha" width="400"/>
-- [OpenGL® and OpenGL® ES Reference Pages](https://registry.khronos.org/OpenGL-Refpages/)
-    - [Mix](https://registry.khronos.org/OpenGL-Refpages/gl4/html/mix.xhtml)
-
-## 0. Shadertoy & Unity
-- https://zhuanlan.zhihu.com/p/52287086
+- 常见 3D SDF：https://iquilezles.org/articles/distfunctions/
 
 
+# 二、内容大纲
 ## 2. 使用SDF画一个圆
 - 调整圆形比例，不随着窗口改变纵横比
 - 使用iTime让圆随着时间改变颜色
@@ -41,15 +42,11 @@
 - 坐标系
     - shadertoy采用右手坐标系。
     - x 轴沿画布的水平轴，y 轴沿画布的垂直轴，并假设摄像机朝向 -z
-- 光线算法之间的区别
+- **光线算法之间的区别**
     - ray casting
     - ray marching
     - ray tracing
     - path tracing
-- RayMarching原理
-    - https://www.youtube.com/watch?v=nMAgogUyv3E
-    - https://www.desmos.com/calculator/ragaytzefw
-
 
 ## 7 绘制多个3D对象和多个颜色
 - 添加多个物体
@@ -61,3 +58,6 @@
     2. 使用 Struct : [7_MultiObject](7_MultiObject.glsl)
     ![images](images/7_MultiObject.png)
     3. 使用 ID 为场景中不同物体进行着色 : [7_MapIDColor](7_MapIDColor.glsl)
+
+## 8. 3D旋转
+- 添加一个立方体: [3D_SDF](https://iquilezles.org/articles/distfunctions/)
