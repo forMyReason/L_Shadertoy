@@ -1,6 +1,7 @@
 const float MIN_DIST = 0.0;
 const float MAX_DIST = 100.0;
 const vec3 COLOR_SPHERE = vec3(1.,0.6,0.2);
+const vec3 COLOR_BOXFRAME = vec3(1.,0.6,0.2);
 const vec3 COLOR_BACKGROUND = vec3(0.835, 1, 1);
 const vec3 LIGHT_DIRECTION = vec3(0.2,0.6,0.5);
 
@@ -22,6 +23,27 @@ surface sdFloor(vec3 p, vec3 col) {
     return surface(d, col);
 }
 
+/// https://iquilezles.org/articles/distfunctions/
+/* sdBoxFrame参数
+    计算一个带有边框厚度的盒子的表面距离场（SDF），并返回带有颜色信息的 surface 结构体。
+
+    - p：通常表示当前点到物体中心的向量（或坐标），经过了 abs(p)-b 处理，b 一般是盒子的半尺寸（半边长），这样 p 就变成了点到盒子表面的距离向量（带符号）。
+    - b：盒子的半尺寸向量（vec3），决定了盒子的大小。
+    - e：框的粗细
+    - color：物体的颜色，作为参数传递给 surface。
+*/
+surface sdBoxFrame( vec3 p, vec3 b, float e, vec3 offset, vec3 color)
+{
+       p = abs(p  )-b;
+  vec3 q = abs(p+e)-e;
+  return surface(
+        min(
+            min(length(max(vec3(p.x,q.y,q.z),0.0))+min(max(p.x,max(q.y,q.z)),0.0),length(max(vec3(q.x,p.y,q.z),0.0))+min(max(q.x,max(p.y,q.z)),0.0)),
+            length(max(vec3(q.x,q.y,p.z),0.0))+min(max(q.x,max(q.y,p.z)),0.0)
+        ),
+        color);
+}
+
 surface minWithColor(surface obj1, surface obj2) {
     if (obj2.sd < obj1.sd)
         return obj2;
@@ -31,6 +53,7 @@ surface minWithColor(surface obj1, surface obj2) {
 surface sdScene(vec3 p, vec3 col) {
     vec3 floorColor = vec3(1. + 0.7*mod(floor(p.x) + floor(p.z), 2.0));
     surface co = sdFloor(p, floorColor);
+    co = minWithColor(co, sdBoxFrame(p,  vec3(0.5), 0.035, vec3(5.0), COLOR_BOXFRAME));
     return co;
 }
 
