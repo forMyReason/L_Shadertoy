@@ -67,10 +67,16 @@ mat3 identity() {
 
 surface sdBox(vec3 p, vec3 b, vec3 color)
 {
-    // 让立方体每个轴都旋转
+    /// 1. 高低浮动 + 绕自身中心多轴旋转
     p.y += sin(2. * iTime) * 0.08;
     p = p * rotateY(0.5 * iTime) * rotateZ(0.3 * iTime) * rotateX(0.7 * iTime);
     vec3 q = abs(p) - b;
+
+    /// 2. 绕某个轴旋转
+    // vec3 rotation_from = vec3(0.8,0,0);
+    // p = p * rotateY(iTime * 2.0);
+    // vec3 q = abs(p - rotation_from) - b;
+    
     return surface(length(max(q,0.0)) + min(max(q.x,max(q.y,q.z)),0.0), color);
 }
 
