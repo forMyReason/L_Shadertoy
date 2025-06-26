@@ -133,8 +133,19 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord)
     uv.x *= (iResolution.x / iResolution.y);
 
     // 右手系，看向-z
+    /// Static
+    // vec3 ro = vec3(0,0,2);
+    // vec3 rd = vec3(uv, -1);
+    
+    /// XYMovement
+    // float camera_movement = 0.3;
+    // vec3 ro = vec3(camera_movement * cos(iTime), camera_movement * sin(iTime)+0.1,2);
+    // vec3 rd = vec3(uv, -1);
+
+    /// Rotate Around X
     vec3 ro = vec3(0,0,2);
-    vec3 rd = vec3(uv, -1);
+    vec3 rd = normalize(vec3(uv, -1));
+    rd *= rotateX(sin(iTime)*0.3);
 
     vec3 lightDirection = vec3(0.2,0.6,0.5);
     vec3 col;
