@@ -5,24 +5,8 @@ const vec3 COLOR_SPHERE = vec3(1.,0.6,0.2);
 const vec3 COLOR_BOXFRAME = vec3(1.,0.6,0.2);
 const vec3 COLOR_BACKGROUND = vec3(0.835, 1, 1);
 const vec3 LIGHT_DIRECTION = vec3(0.2,0.6,0.5);
-
-struct surface
-{
-    float sd;
-    vec3 color;
-}s;
-
-surface sdSphere(vec3 p, float radius, vec3 color)
-{
-    vec3 origin = vec3(0.0);
-    float d = length(p - origin) - radius;
-    return surface(d,color);
-}
-
-surface sdFloor(vec3 p, vec3 col) {
-    float d = p.y + 1.;
-    return surface(d, col);
-}
+const float ID_FLOOR = 0.0;
+const float ID_BOX = 1.0;
 
 // Rotation matrix around the X axis.
 mat3 rotateX(float theta) {
@@ -66,7 +50,26 @@ mat3 identity() {
     );
 }
 
-surface sdBox(vec3 p, vec3 b, vec3 color)
+struct surface
+{
+    float sd;
+    vec3 color;
+    float id;       // 用于区分是否参与shading
+}s;
+
+surface sdSphere(vec3 p, float radius, vec3 color, float id)
+{
+    vec3 origin = vec3(0.0);
+    float d = length(p - origin) - radius;
+    return surface(d,color, id);
+}
+
+surface sdFloor(vec3 p, vec3 col, float id) {
+    float d = p.y + 1.;
+    return surface(d, col, id);
+}
+
+surface sdBox(vec3 p, vec3 b, vec3 color, float id)
 {
     /// 1. 高低浮动 + 绕自身中心多轴旋转
     p.y += sin(2. * iTime) * 0.08;
@@ -78,7 +81,7 @@ surface sdBox(vec3 p, vec3 b, vec3 color)
     // p = p * rotateY(iTime * 2.0);
     // vec3 q = abs(p - rotation_from) - b;
     
-    return surface(length(max(q,0.0)) + min(max(q.x,max(q.y,q.z)),0.0), color);
+    return surface(length(max(q,0.0)) + min(max(q.x,max(q.y,q.z)),0.0), color, 1.0);
 }
 
 surface minWithColor(surface obj1, surface obj2) {
@@ -89,9 +92,9 @@ surface minWithColor(surface obj1, surface obj2) {
 
 surface sdScene(vec3 p, vec3 color)
 {
-    vec3 floorColor = vec3(1. + 0.7*mod(floor(p.x) + floor(p.z), 2.0));
-    surface co = sdFloor(p, floorColor);
-    surface co_box = sdBox(p, vec3(0.3), vec3(1, 0, 0));
+    vec3 floorColor = vec3(.5 + 0.3*mod(floor(p.x) + floor(p.z), 2.0));
+    surface co = sdFloor(p, floorColor, ID_FLOOR);
+    surface co_box = sdBox(p, vec3(0.3), vec3(1, 0, 0), ID_BOX);
     co = minWithColor(co, co_box);
     return co;
 }
@@ -145,7 +148,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord)
     /// Rotate Around X
     vec3 ro = vec3(0,0,2);
     vec3 rd = normalize(vec3(uv, -1));
-    rd *= rotateX(sin(iTime)*0.3);
+    rd *= rotateY(iTime);
 
     vec3 lightDirection = vec3(0.2,0.6,0.5);
     vec3 col;
@@ -157,12 +160,18 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord)
     {
         vec3 p = ro + rd * co.sd;
         vec3 normal = calcNormal_swizzling(p);
-        vec3 lightPosition = vec3(2, 2, 7);
-        vec3 lightDirection = normalize(lightPosition - p);
 
-        float dif = clamp(dot(normal, lightDirection), 0.3, 1.); // diffuse reflection
-
-        col = dif * co.color + COLOR_BACKGROUND * .2;
+        if(co.id == 0.0)
+        {
+            col = co.color;
+        }
+        else
+        {
+            vec3 lightPosition = vec3(2, 2, 7);
+            vec3 lightDirection = normalize(lightPosition - p);
+            float dif = clamp(dot(normal, lightDirection), 0.3, 1.); // diffuse reflection
+            col = dif * co.color + COLOR_BACKGROUND * .2;
+        }
     }
     fragColor = vec4(col, 1.0);
 }
