@@ -61,3 +61,30 @@
 
 ## 8. 3D旋转
 - 添加一个立方体: [3D_SDF](https://iquilezles.org/articles/distfunctions/)
+- 三维旋转矩阵
+
+## 9. Camera
+- 右手系，摄像机看向$-z$
+- 通过为每个物体增加id，减少地板由于靠近光源带来的亮度极高的漫反射
+- Shadertoy中全局变量
+    ```
+    // Shader Inputs
+    uniform vec3      iResolution;           // viewport resolution (in pixels)
+    uniform float     iTime;                 // shader playback time (in seconds)
+    uniform float     iTimeDelta;            // render time (in seconds)
+    uniform int       iFrame;                // shader playback frame
+    uniform float     iChannelTime[4];       // channel playback time (in seconds)
+    uniform vec3      iChannelResolution[4]; // channel resolution (in pixels)
+    uniform vec4      iMouse;                // mouse pixel coords. xy: current (if MLB down), zw: click
+    uniform samplerXX iChannel0..3;          // input channel. XX = 2D/Cube
+    uniform vec4      iDate;                 // (year, month, day, time in seconds)
+    uniform float     iSampleRate;           // sound sample rate (i.e., 44100)
+    ```
+- 鼠标输入
+    - 单击屏幕某个位置时，通过iMouse获取鼠标位置
+
+[未完待续...]
+
+# 三、WoW Shader
+- MixShape
+  - <img alt="MixShape.png" src="images/MixShape.png" width="400"/>
